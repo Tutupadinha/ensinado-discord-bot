@@ -65,7 +65,7 @@ while(diretórios.length){
     console.log(">>Erro ao ler "+pasta+": "+erro.message," - ",erro.name);
   }
 }
-console.log(logcrr);
+console.log(logcrr +"carregados.");
 
 /*  Carrega os códigos dos eventos da API do discord  */
 bot.nome_eventos = [];
@@ -87,7 +87,7 @@ try{//faz a leitura dos eventos relativos a API discord.js
 }catch(erro){
   console.log(">>Erro ao ler eventos! "+erro.message+" - "+erro.name);
 }
-console.log(logcrr);
+console.log(logcrr +"carregados.");
 
 
 try{
