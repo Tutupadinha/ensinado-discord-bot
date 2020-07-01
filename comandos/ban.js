@@ -3,11 +3,11 @@ const Discord = require('discord.js')
 module.exports.run = async (bot, message, args) => {
   let ban = new Discord.MessageEmbed()
     .setColor("RED")
-    .setFooter(`Comando solicitado por ${message.member.displayName}`, message.author.displayAvatarURL({size: 32}))
-    .setTimestamp()
-    .setTitle("Comando de ban")
-    .addField("Descrição:", `Bane um membro`, true)
-    .addField("Uso:", `t.ban [usuário] [motivo]`, true)
+     .setFooter(`Comando solicitado por ${message.member.displayName}`, message.author.displayAvatarURL({size: 32}))
+      .setTimestamp()
+         .setTitle("Comando de ban")
+      .addField("Descrição:", `Bane um membro`, true)
+     .addField("Uso:", `t.ban [usuário] [motivo]`, true)
     .addField("Exemplo:", `t.ban @lordluch spam`)
   
   if(!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send("Você não tem permissão para fazer isso!");
@@ -37,7 +37,7 @@ module.exports.run = async (bot, message, args) => {
     .setTimestamp()
   
   message.channel.send(banido)
-  message.guild.channels.cache.get("725486321212194937").send(banido)
+  message.guild.channels.cache.get("id do canal de punições").send(banido)
 
 
 
