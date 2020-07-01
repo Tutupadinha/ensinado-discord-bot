@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
 exports.run = (bot, message, args, arg_txt, chat) => {
   let member = message.mentions.members.first();
-  var prefix = "t."
+  var prefix = "seu prefixo!"
   var command = message.content.toLowerCase().split(" ")[0];
     var args = message.content.toLowerCase().split(" ");
     var user = message.mentions.users.first()
@@ -16,8 +16,8 @@ exports.run = (bot, message, args, arg_txt, chat) => {
             message.guild.members.unban(args[1]);
             message.channel.send(new Discord.MessageEmbed().setColor('GREEN').setTitle(`UNBAN | Desbaniu!`).addField(`id mencionado encontrado!`, `Desbanido!`, true).setFooter(`Comando solicitado por ${message.member.displayName}`, message.author.displayAvatarURL({Size: 32})).setTimestamp(message.createdAt))
             message.channel.send(`<@${args[1]}> foi desbanido!`)
-            message.guild.channels.cache.get('725486321212194937').send(new Discord.MessageEmbed().setColor('GREEN').setTitle(`UNBAN | Desbaniu!`).addField(`id mencionado encontrado!`, `Desbanido!`, true).setFooter(`Comando solicitado por ${message.member.displayName}`, message.author.displayAvatarURL({Size: 32})).setTimestamp(message.createdAt))
-            message.guild.channels.cache.get('725486321212194937').send(`<@${args[1]}> foi desbanido!`)
+            message.guild.channels.cache.get('id do canal de punições').send(new Discord.MessageEmbed().setColor('GREEN').setTitle(`UNBAN | Desbaniu!`).addField(`id mencionado encontrado!`, `Desbanido!`, true).setFooter(`Comando solicitado por ${message.member.displayName}`, message.author.displayAvatarURL({Size: 32})).setTimestamp(message.createdAt))
+            message.guild.channels.cache.get('id do canal de punições').send(`<@${args[1]}> foi desbanido!`)
           }
 
         )}
