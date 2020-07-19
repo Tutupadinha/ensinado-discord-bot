@@ -2,13 +2,9 @@ module.exports = async (bot, message) => { //cuida do evento de mensagens enviad
   if(message.author.bot)//se for msg privada ou de bot -> cai fora
     return; ///  || !message.guild
 
-  if(!message.content.startsWith(bot.prefixo)){//se a msg não inicia com o prefixo 
-    var mencionados = message.mentions.members;
-    if(mencionados.size && mencionados.has("726797893498961983")) {
-      return message.channel.send("Meu prefixo neste servidor é: ``"+bot.prefixo+"``")
-    } else    
-      return;//-> cai fora
-  }
+  if(!message.content.startsWith(bot.prefixo))//se a msg não inicia com o prefixo   
+     return;//-> cai fora
+  
   
   //if(message.content.startsWith("=="))//se for comando de outro bo com o prefixo ==
   //  return;
