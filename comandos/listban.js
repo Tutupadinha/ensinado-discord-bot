@@ -20,10 +20,10 @@ exports.run = async (bot, message) => {
                     
                     msg.reactions.removeAll
                     message.guild.fetchBans().then(async (bans) => {
+                     message.channel.send('Enviei a lista de bans no seu privado! \n(Caso não receba nenhuma mensagem no privado significa que não tem ninguem banido!)');
                       bans.forEach(async (ban) => {
                         i++;
                           
-                        message.channel.send('Enviei a lista de bans no seu privado! \n(Caso não receba nenhuma mensagem no privado significa que não tem ninguem banido!)');
                           await message.author.send(i+ '.**Nome:**' + ban.user.username + ' | **ID:** ' + ban.user.id + ' | **bot:**' + ban.user.bot + '');
                       
                       })
