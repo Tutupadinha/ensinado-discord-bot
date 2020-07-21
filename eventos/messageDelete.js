@@ -7,6 +7,6 @@ let embed = new Discord.MessageEmbed()
     .setTitle("Mensagem deletada!")
     .setDescription("O usuário <@"+message.author+"> deletou a mensagem "+message.content)  
   
-bot.channels.cache.get("731596341993537647").send(embed)
+bot.channels.cache.get("id_do_canal").send(embed)
 
 }
