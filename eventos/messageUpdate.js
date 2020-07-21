@@ -10,6 +10,6 @@ const Discord = require('discord.js')
         .setDescription("O usuário <@"+oldMessage.author.id+"> modificou uma mensagem\n Antiga mensagem\n"+oldMessage.content+"\nNova Mensagem\n"+newMessage.content)  
 
     
-    bot.channels.cache.get("731596341993537647").send(teste)
+    bot.channels.cache.get("id_do_canal").send(teste)
 
   }
