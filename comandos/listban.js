@@ -1,33 +1,42 @@
 const Discord = require('discord.js')
-exports.run = async (bot, message, args, arg_txt, chat) => {
-  
-  let member = message.mentions.members.first();
-  var user = message.mentions.users.first()
-    
-        if(message.member.permissions.has('BAN_MEMBERS')) { 
-        if(!message.guild.member(bot.user).permissions.has("BAN_MEMBERS")) return message.channel.send("**Não tenho permissão para banir**");
-        if(!args[0]) return  message.channel.send('**Mencione o id do usuário!**');
-        if(args[0].length < 16) return message.channel.send('** Este ID não é o id de um usuário!**');
-        message.guild.fetchBans().then(bans => { 
-            var Found = bans.find(m => m.user.id === args[0]);
-            console.log(bans)
-            if(!Found) return message.channel.send(`**Eu não encontrei <@${args[0]}> na ban list**`);
+
+exports.run = async (bot, message) => { 
+  if(!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send("VOCÊ NÃO É ADM!")
+    try {
+      let output = '';
+        let i = 0
           
-            message.guild.members.unban(args[0]);
-          
-          let staff = new Discord.MessageEmbed()
-              .setColor("#00FFFF")
-              .setTitle("✅ | Unban")
-              .setDescription("O usuário: <@"+args[0]+"> foi desbanido por <@"+message.author.id+">")
-              .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({Size: 32}))
-              .setTimestamp()
-              .setFooter("ID do usuário: "+args[0])  
-         //podem usar o embed acima ou mandar a mensagem direto 
-    message.channel.send("O Usuário <@"+args[0]+"> foi desbanido! Ele recebeu uma segunda chance de mostrar que mudou! Espero que prove isto...")
- 
-          })   
-        } else {
-          return message.channel.send("**Você não tem permissão para banir**");
-        }
-  
-      } 
+        message.channel.send(`Você quer receber a lista de bans? Reaja com ✅ para confirmar o envio.`)
+              .then(async (msg) => {
+          await msg.react("✅")
+          await msg.react("⏹")
+            const filtro = (reaction, user) => ['✅', '⏹'].includes(reaction.emoji.name) && user.id === message.author.id
+              const coletor = msg.createReactionCollector(filtro)
+              
+              coletor.on("collect", r => {
+                
+                switch (r.emoji.name) {
+                  case '✅':
+                    
+                    msg.reactions.removeAll
+                    message.guild.fetchBans().then(async (bans) => {
+                     message.channel.send('Enviei a lista de bans no seu privado! \n(Caso não receba nenhuma mensagem no privado significa que não tem ninguem banido!)');
+                      bans.forEach(async (ban) => {
+                        i++;
+                          
+                          await message.author.send(i+ '.**Nome:**' + ban.user.username + ' | **ID:** ' + ban.user.id + ' | **bot:**' + ban.user.bot + '');
+                      
+                      })
+                    })
+                     break;
+                    case '⏹': 
+                     msg.reactions.removeAll
+                    msg.delete().then(message.channel.send(`O envio foi cancelado.`));
+                    break;
+                } 
+              })
+        })
+    } catch (err) {
+      message.channel.send('Um erro aconteceu! \n' + err).catch();
+    }
+}
