@@ -4,7 +4,7 @@ module.exports = async (bot, message) => { //cuida do evento de mensagens enviad
 
   if(!message.content.startsWith(bot.prefixo)){//se a msg não inicia com o prefixo 
     var mencionados = message.mentions.members;
-    if(mencionados.size && mencionados.has("726797893498961983")) {
+    if(mencionados.size && mencionados.has("id_do_seu_bot")) {
       return message.channel.send("Meu prefixo neste servidor é: ``"+bot.prefixo+"``")
     } else    
       return;//-> cai fora
