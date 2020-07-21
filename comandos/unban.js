@@ -27,7 +27,7 @@ exports.run = async (bot, message, args, arg_txt, chat) => {
  
           })   
         } else {
-          return message.channel.send("**Você não tem permissão para banir**");
+          return message.channel.send("**Você não tem permissão para desbanir**");
         }
   
       } 
