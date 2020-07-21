@@ -1,24 +1,33 @@
 const Discord = require('discord.js')
-exports.run = (bot, message, args, arg_txt, chat) => {
+exports.run = async (bot, message, args, arg_txt, chat) => {
+  
   let member = message.mentions.members.first();
-  var prefix = "seu prefixo!"
-  var command = message.content.toLowerCase().split(" ")[0];
-    var args = message.content.toLowerCase().split(" ");
-    var user = message.mentions.users.first()
-    if(command == prefix + 'unban') {
-        if(!message.member.hasPermission('BAN_MEMBERS')) return message.channel.send("**Você não tem permissão para banir**");
-        if(!message.guild.member(bot.user).hasPermission("BAN_MEMBERS")) return message.reply("**Não tenho permissão para banir**");
-        if(!args[1]) return  message.channel.send('**Mencione o usuário ou o id dele**');
-        if(args[1].length < 16) return message.reply('** Este ID não é o id de um usuário!**');
+  var user = message.mentions.users.first()
+    
+        if(message.member.permissions.has('BAN_MEMBERS')) { 
+        if(!message.guild.member(bot.user).permissions.has("BAN_MEMBERS")) return message.channel.send("**Não tenho permissão para banir**");
+        if(!args[0]) return  message.channel.send('**Mencione o id do usuário!**');
+        if(args[0].length < 16) return message.channel.send('** Este ID não é o id de um usuário!**');
         message.guild.fetchBans().then(bans => { 
-            var Found = bans.find(m => m.user.id === args[1]);
-            if(!Found) return message.channel.send(`**Eu não encontrei <@${args[1]}> na ban list**`);
-            message.guild.members.unban(args[1]);
-            message.channel.send(new Discord.MessageEmbed().setColor('GREEN').setTitle(`UNBAN | Desbaniu!`).addField(`id mencionado encontrado!`, `Desbanido!`, true).setFooter(`Comando solicitado por ${message.member.displayName}`, message.author.displayAvatarURL({Size: 32})).setTimestamp(message.createdAt))
-            message.channel.send(`<@${args[1]}> foi desbanido!`)
-            message.guild.channels.cache.get('id do canal de punições').send(new Discord.MessageEmbed().setColor('GREEN').setTitle(`UNBAN | Desbaniu!`).addField(`id mencionado encontrado!`, `Desbanido!`, true).setFooter(`Comando solicitado por ${message.member.displayName}`, message.author.displayAvatarURL({Size: 32})).setTimestamp(message.createdAt))
-            message.guild.channels.cache.get('id do canal de punições').send(`<@${args[1]}> foi desbanido!`)
-          }
-
-        )}
+            var Found = bans.find(m => m.user.id === args[0]);
+            console.log(bans)
+            if(!Found) return message.channel.send(`**Eu não encontrei <@${args[0]}> na ban list**`);
+          
+            message.guild.members.unban(args[0]);
+          
+          let staff = new Discord.MessageEmbed()
+              .setColor("#00FFFF")
+              .setTitle("✅ | Unban")
+              .setDescription("O usuário: <@"+args[0]+"> foi desbanido por <@"+message.author.id+">")
+              .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({Size: 32}))
+              .setTimestamp()
+              .setFooter("ID do usuário: "+args[0])  
+         //podem usar o embed acima ou mandar a mensagem direto 
+    message.channel.send("O Usuário <@"+args[0]+"> foi desbanido! Ele recebeu uma segunda chance de mostrar que mudou! Espero que prove isto...")
+ 
+          })   
+        } else {
+          return message.channel.send("**Você não tem permissão para banir**");
+        }
+  
       } 
