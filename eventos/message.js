@@ -5,9 +5,6 @@ module.exports = async (bot, message) => { //cuida do evento de mensagens enviad
     let serv = await bot.Database.Guilda.findOne({
       "guild_id": message.guild.id
     })
-    if(!serv.prefixo) {
-        serv.prefixo = "seu_prefixo_padrão"
-    }
     if(!serv) {
       await new bot.Database.Guilda({
         guild_id: message.guild.id,
