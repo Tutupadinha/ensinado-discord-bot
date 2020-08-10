@@ -2,10 +2,23 @@ module.exports = async (bot, message) => { //cuida do evento de mensagens enviad
   if(message.author.bot)//se for msg privada ou de bot -> cai fora
     return; ///  || !message.guild
 
-  if(!message.content.startsWith(bot.prefixo)){//se a msg não inicia com o prefixo 
+    let serv = await bot.Database.Guilda.findOne({
+      "guild_id": message.guild.id
+    })
+    if(!serv.prefixo) {
+        serv.prefixo = "seu_prefixo_padrão"
+    }
+    if(!serv) {
+      await new bot.Database.Guilda({
+        guild_id: message.guild.id,
+        prefixo: "seu_prefixo_padrão",
+      }).save()
+    }
+  
+  if(!message.content.startsWith(serv.prefixo)){//se a msg não inicia com o prefixo 
     var mencionados = message.mentions.members;
     if(mencionados.size && mencionados.has("id_do_seu_bot")) {
-      return message.channel.send("Meu prefixo neste servidor é: ``"+bot.prefixo+"``")
+      return message.channel.send("Meu prefixo neste servidor é: ``"+serv.prefixo+"``")
     } else    
       return;//-> cai fora
   }
@@ -13,7 +26,7 @@ module.exports = async (bot, message) => { //cuida do evento de mensagens enviad
   //if(message.content.startsWith("=="))//se for comando de outro bo com o prefixo ==
   //  return;
   
-  var arg_texto = message.content.slice(bot.prefixo.length); //remove o prefixo da msg
+  var arg_texto = message.content.slice(serv.prefixo.length); //remove o prefixo da msg
   var argumentos = arg_texto.trim().split(/ +/g); //divide a msg do comando
   var comando = argumentos.shift().toLowerCase(); //pega o comando, taca pra minúsculo
   
@@ -34,7 +47,7 @@ module.exports = async (bot, message) => { //cuida do evento de mensagens enviad
       return chat.send("Este comando não pode ser executado no privado!"); 
     }*/
     
-    console.log(message.author.tag + '  ' + bot.prefixo + comando + ' ' + arg_texto);
+    console.log(message.author.tag + '  ' + serv.prefixo + comando + ' ' + arg_texto);
     bot[comando](bot, message, argumentos, arg_texto, chat); //// client, mensagem, comando, argumentos, msg_str, chat, mlog, acesso
     
   }else{//Se não existe o comando, cai fora
