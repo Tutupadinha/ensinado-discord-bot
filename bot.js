@@ -15,14 +15,14 @@ const moment = require('moment');
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 bot.Discord = Discord;
-
+bot.Database = require('./database.js')
 
 //const Enmap = require("enmap");
 const fs = require("fs");
 bot.fs = fs;
 //bot.mathjs = require("mathjs");
 
-bot.prefixo = 'coloque o prefixo desejado aqui!';
+//bot.prefixo = 'g.';
 
 /*  Carrega os códigos dos módulos: comandos e sistemas  */
 bot.pastas = {}; //vai associar um comando a uma paste
