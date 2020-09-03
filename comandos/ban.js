@@ -2,7 +2,7 @@ const Discord = require("discord.js")
 
 module.exports.run = async (bot, message, args) => {
 
-let xdemb = new Discord.MessageEmbed()
+let xdemb = new Discord.MessageEmbed() SeUs CUZAO KKKKKKKKKKKKK
     .setColor("RANDOM")
     .setTitle("Comando de ban")
     .addField("Description:", `Bane um membro`, true)
